@@ -1,0 +1,36 @@
+name: android-apk
+
+# Gera o APK de release como artifact do workflow (baixável em Actions → run → Artifacts).
+# Não requer secrets: assinatura de debug padrão do Flutter (--release assina com debug keystore
+# se nenhum keystore próprio for configurado). Para distribuir na Play Store, configure um
+# keystore e o signing config no android/app/build.gradle.kts.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build release APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK (release)
+        run: flutter build apk --release --split-per-abi
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: climasul-apk
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 30
