@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Necessário para buscar previsão/alertas/radar na rede em builds release.
+         (O template do Flutter declara INTERNET só nos manifests debug/profile.) -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="ClimaSul"
         android:name="${applicationName}"
