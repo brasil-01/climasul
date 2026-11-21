@@ -1,0 +1,65 @@
+name: clima_sul
+description: "ClimaSul — o tempo da nossa região. Previsão do tempo, radar de chuva e alertas para o Vale dos Sinos e a Grande Porto Alegre (RS), com dados abertos do Open-Meteo e alertas oficiais do INMET."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  material_ui: ^1.11.1
+  http: ^1.2.2
+  flutter_riverpod: ^2.6.1
+  intl: ^0.20.2
+  fl_chart: ^0.69.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  shared_preferences: ^2.3.3
+  share_plus: ^10.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/brand/climasul_icon.png
+    - assets/brand/porto_alegre_sunset.png
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          weight: 800
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/brand/climasul_icon.png
+  web:
+    generate: true
+    background_color: "#082D5B"
+    theme_color: "#082D5B"
+  adaptive_icon_background: "#082D5B"
+  adaptive_icon_foreground: assets/brand/climasul_icon.png
