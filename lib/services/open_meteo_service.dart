@@ -118,10 +118,27 @@ class OpenMeteoService {
           'latitude=$lats&longitude=$lngs&current=$_regionCurrentParams'
           '&daily=$_regionDailyParams&timezone=America/Sao_Paulo&forecast_days=4';
       final uri = Uri(scheme: 'https', host: _forecastHost, path: '/v1/forecast', query: query);
-      final resp =
-          await _client.get(uri).timeout(const Duration(seconds: 15));
-      if (resp.statusCode != 200) {
-        throw OpenMeteoException('HTTP ${resp.statusCode}');
+      // A varredura em lote (33 cidades) é mais pesada que uma chamada comum;
+      // tenta até 3 vezes com espera progressiva antes de desistir.
+      http.Response? resp;
+      Object? lastError;
+      for (var attempt = 0; attempt < 3; attempt++) {
+        try {
+          final r = await _client.get(uri).timeout(const Duration(seconds: 18));
+          if (r.statusCode == 200) {
+            resp = r;
+            break;
+          }
+          lastError = OpenMeteoException('HTTP ${r.statusCode}');
+        } catch (e) {
+          lastError = e;
+        }
+        if (attempt < 2) {
+          await Future<void>.delayed(Duration(seconds: attempt + 1));
+        }
+      }
+      if (resp == null) {
+        throw OpenMeteoException('HTTP após 3 tentativas ($lastError)');
       }
       final decoded = jsonDecode(resp.body);
       final list = decoded is List ? decoded.cast<Map<String, dynamic>>() : [decoded as Map<String, dynamic>];

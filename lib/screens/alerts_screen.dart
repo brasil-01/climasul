@@ -157,7 +157,7 @@ class AlertsScreen extends ConsumerWidget {
             _AllClearCard(
               title: 'Varredura indisponível',
               subtitle:
-                  'Não foi possível varrer a região agora. Puxe para atualizar.',
+                  'A varredura das 33 cidades falhou após 3 tentativas. Verifique a conexão e puxe para atualizar.',
               positive: false,
             )
           else if (regionGroups.isEmpty)
